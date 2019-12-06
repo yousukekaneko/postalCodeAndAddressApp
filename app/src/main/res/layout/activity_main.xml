@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/textPostalAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="150dp"
@@ -18,25 +18,25 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/searchButton"
         android:layout_width="240dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="56dp"
-        android:text="検索"
+        android:text="@string/searchButton_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/textPostalAddress" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/resultLabel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="134dp"
         android:layout_marginEnd="8dp"
         android:gravity="center"
-        android:text="検索結果"
+        android:text="@string/resultLabel_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/searchButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>
