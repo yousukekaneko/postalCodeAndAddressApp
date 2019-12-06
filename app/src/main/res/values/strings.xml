@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">postalCodeAndAddressApp</string>
+
+    <string name="searchButton_text">search</string>
+    <string name="resultLabel_text">result</string>
+
 </resources>
