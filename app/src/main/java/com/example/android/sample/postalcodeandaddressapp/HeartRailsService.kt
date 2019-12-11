@@ -4,11 +4,12 @@ import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface ApiService {
+interface HeartRailsService {
 
     @GET("api/json")
 
     fun apiGet(
-        @Query("method") method: Int
+        @Query("method") method: String,
+        @Query("postal") postal: String
         ): Call<List<AddressResponse>>
 }
