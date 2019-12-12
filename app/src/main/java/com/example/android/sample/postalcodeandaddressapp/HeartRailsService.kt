@@ -7,9 +7,8 @@ import retrofit2.http.Query
 interface HeartRailsService {
 
     @GET("api/json")
-
     fun apiGet(
         @Query("method") method: String,
         @Query("postal") postal: String
-        ): Call<List<AddressResponse>>
+    ): Call<List<AddressResponse>>
 }
