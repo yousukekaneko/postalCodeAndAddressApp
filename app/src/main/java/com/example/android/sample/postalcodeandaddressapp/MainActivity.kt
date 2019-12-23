@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
             .client(client)
             .build()
 
+        val service = retrofit.create(HeartRailsService::class.java)
 
         //クリック処理（簡易）
         searchButton.setOnClickListener {
@@ -37,8 +38,6 @@ class MainActivity : AppCompatActivity() {
             //TODO 入力した値が正しいかどうかの処理
 
             //TODO 正しい場合、fun apiGetを呼ぶ
-            val service = retrofit.create(HeartRailsService::class.java)
-
             val addressResponse = service.apiGet("", "")
 
             //TODO 誤っている場合、アラートを出す
