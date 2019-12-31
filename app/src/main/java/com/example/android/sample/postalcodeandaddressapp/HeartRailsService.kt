@@ -10,5 +10,5 @@ interface HeartRailsService {
     fun apiGet(
         @Query("method") method: String,
         @Query("postal") postal: String
-    ): Call<List<AddressResponse>>
+    ): Call<List<Location>>
 }
