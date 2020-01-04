@@ -44,16 +44,16 @@ class MainActivity : AppCompatActivity() {
 
 
                 val location = service.apiGet("searchByPostal", inputAddress)
-                location.enqueue(object : retrofit2.Callback<List<Location>> {
+                location.enqueue(object : retrofit2.Callback<PostalResponse> {
 
                     override fun onResponse(
-                        call: Call<List<Location>>,
-                        response: Response<List<Location>>
+                        call: Call<PostalResponse>,
+                        response: Response<PostalResponse>
                     ) {
                         Log.d("通信結果", "成功!!!")
                         resultLabel.text = response.body().toString()
                     }
-                    override fun onFailure(call: Call<List<Location>>, t: Throwable) {
+                    override fun onFailure(call: Call<PostalResponse>, t: Throwable) {
                         Log.d("通信結果", "失敗 $t")
                     }
                 })
