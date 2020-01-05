@@ -36,27 +36,38 @@ class MainActivity : AppCompatActivity() {
         //クリック処理
         searchButton.setOnClickListener {
             val inputAddress = textPostalAddress.text.toString()
-//            resultLabel.text = inputAddress
 
             //TODO 入力した値が正しいかどうかの処理
 
-                //TODO 正しい場合、fun apiGetを呼ぶ
+            val location = service.apiGet("searchByPostal", inputAddress)
+            location.enqueue(object : retrofit2.Callback<PostalResponse> {
 
+                override fun onResponse(
+                    call: Call<PostalResponse>,
+                    response: Response<PostalResponse>
+                ) {
+                    Log.d("通信結果", "成功!!!")
 
-                val location = service.apiGet("searchByPostal", inputAddress)
-                location.enqueue(object : retrofit2.Callback<PostalResponse> {
+                    //mapを使わないパターン
+//                    var text = ""
+//                    val eachAddress = response.body()!!.response.location
+//                    for (i in eachAddress) {
+//                        text += "都道府県 : ${i.prefecture}\n区 : ${i.city}\n番地 : ${i.town}\n\n"
+//                    }
+//                    resultLabel.text = text
 
-                    override fun onResponse(
-                        call: Call<PostalResponse>,
-                        response: Response<PostalResponse>
-                    ) {
-                        Log.d("通信結果", "成功!!!")
-                        resultLabel.text = response.body().toString()
+                    //mapを使ったパターン
+                    val eachAddress = response.body()!!.response.location
+                    for (i in eachAddress) {
+                        resultLabel.text =
+                            eachAddress.map {"都道府県 : ${i.prefecture}\n区 : ${i.city}\n番地 : ${i.town}\n\n" }
+                                .joinToString()
                     }
-                    override fun onFailure(call: Call<PostalResponse>, t: Throwable) {
-                        Log.d("通信結果", "失敗 $t")
-                    }
-                })
+                }
+                override fun onFailure(call: Call<PostalResponse>, t: Throwable) {
+                    Log.d("通信結果", "失敗 $t")
+                }
+            })
         }
     }
 }
