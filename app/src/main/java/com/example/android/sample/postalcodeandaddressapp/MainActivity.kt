@@ -1,6 +1,7 @@
 package com.example.android.sample.postalcodeandaddressapp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import okhttp3.OkHttpClient
@@ -32,34 +33,30 @@ class MainActivity : AppCompatActivity() {
 
         val service = retrofit.create(HeartRailsService::class.java)
 
-        //クリック処理（簡易）
+        //クリック処理
         searchButton.setOnClickListener {
             val inputAddress = textPostalAddress.text.toString()
-            resultLabel.text = inputAddress
+//            resultLabel.text = inputAddress
 
             //TODO 入力した値が正しいかどうかの処理
 
                 //TODO 正しい場合、fun apiGetを呼ぶ
 
 
-                val addressResponse = service.apiGet("searchByPostal", inputAddress)
-                addressResponse.enqueue(object : retrofit2.Callback<List<AddressResponse>> {
-                    override fun onFailure(call: Call<List<AddressResponse>>, t: Throwable) {
-                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                    }
+                val location = service.apiGet("searchByPostal", inputAddress)
+                location.enqueue(object : retrofit2.Callback<PostalResponse> {
 
                     override fun onResponse(
-                        call: Call<List<AddressResponse>>,
-                        response: Response<List<AddressResponse>>
+                        call: Call<PostalResponse>,
+                        response: Response<PostalResponse>
                     ) {
-                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                        Log.d("通信結果", "成功!!!")
+                        resultLabel.text = response.body().toString()
+                    }
+                    override fun onFailure(call: Call<PostalResponse>, t: Throwable) {
+                        Log.d("通信結果", "失敗 $t")
                     }
                 })
-
-
-                //TODO 誤っている場合、アラートを出す
-
-
         }
     }
 }

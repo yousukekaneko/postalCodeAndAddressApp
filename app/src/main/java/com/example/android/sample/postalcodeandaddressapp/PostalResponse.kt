@@ -1,14 +1,14 @@
 package com.example.android.sample.postalcodeandaddressapp
 
+data class PostalResponse(
+    val response: Response
+)
+
 data class Response(
-    val location: Location
+    val location: List<Location>
 )
 
-data class Location(
-    val addresses: List<AddressResponse>
-)
-
-data class AddressResponse (
+data class Location (
 
     val city : String,
     val city_kana: String,
