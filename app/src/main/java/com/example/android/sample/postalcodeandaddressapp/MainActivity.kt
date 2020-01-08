@@ -18,7 +18,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
         //log interceptorの設定
         val interceptor = HttpLoggingInterceptor()
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -50,19 +49,22 @@ class MainActivity : AppCompatActivity() {
 
                     //mapを使わないパターン
 //                    var text = ""
-//                    val eachAddress = response.body()!!.response.location
-//                    for (i in eachAddress) {
-//                        text += "都道府県 : ${i.prefecture}\n区 : ${i.city}\n番地 : ${i.town}\n\n"
+//                    val eachAddress = response.body()?.response?.location
+//                    if (eachAddress != null) {
+//                        for (i in eachAddress) {
+//                            text += "都道府県 : ${i.prefecture}\n区 : ${i.city}\n番地 : ${i.town}\n\n"
+//                        }
 //                    }
 //                    resultLabel.text = text
 
                     //mapを使ったパターン
-                    val eachAddress = response.body()!!.response.location
-                    for (i in eachAddress) {
-                        resultLabel.text =
-                            eachAddress.map {"都道府県 : ${i.prefecture}\n区 : ${i.city}\n番地 : ${i.town}\n\n" }
-                                .joinToString()
-                    }
+                    val eachAddress : List<Location>? = response.body()?.response?.location
+
+                    resultLabel.text =
+                        eachAddress?.map {
+                            "都道府県 : ${it.prefecture}\n区 : ${it.city}\n番地 : ${it.town}\n\n"
+                        }?.joinToString()
+
                 }
                 override fun onFailure(call: Call<PostalResponse>, t: Throwable) {
                     Log.d("通信結果", "失敗 $t")
