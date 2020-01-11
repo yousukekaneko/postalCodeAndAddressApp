@@ -4,4 +4,8 @@
     <string name="searchButton_text">検索</string>
     <string name="resultLabel_text">検索結果</string>
 
+    <string name="dialog_title">お願い</string>
+    <string name="dialog_message">7桁の数字を入力してください。</string>
+
+    <string name="answer_yes">はい</string>
 </resources>

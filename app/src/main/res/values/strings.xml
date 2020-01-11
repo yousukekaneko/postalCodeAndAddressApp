@@ -3,5 +3,10 @@
 
     <string name="searchButton_text">search</string>
     <string name="resultLabel_text">result</string>
+    
+    <string name="dialog_title">Attention!</string>
+    <string name="dialog_message">Please enter a 7 digit number!</string>
+
+    <string name="answer_yes">Yes</string>
 
 </resources>
