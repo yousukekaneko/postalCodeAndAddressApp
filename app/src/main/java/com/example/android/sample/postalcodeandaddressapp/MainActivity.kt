@@ -2,7 +2,6 @@ package com.example.android.sample.postalcodeandaddressapp
 
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import okhttp3.OkHttpClient
@@ -37,16 +36,16 @@ class MainActivity : AppCompatActivity() {
         searchButton.setOnClickListener {
             var inputAddress = textPostalAddress.text.toString()
 
-            //TODO 入力した値が正しいかどうかの処理
-            if (inputAddress.length != 7) {
-                val invalidDialog = AlertDialog.Builder(this@MainActivity).apply{
-                    setTitle(getString(R.string.dialog_title))
-                    setMessage(getString(R.string.dialog_message))
-                    setPositiveButton(getString(R.string.answer_yes)) { _, _ ->
-                    }
-                    show()
-                }
-            }
+//            //TODO 入力した値が正しいかどうかの処理
+//            if (inputAddress.length != 7) {
+//                val invalidDialog = AlertDialog.Builder(this@MainActivity).apply{
+//                    setTitle(getString(R.string.dialog_title))
+//                    setMessage(getString(R.string.dialog_message))
+//                    setPositiveButton(getString(R.string.answer_yes)) { _, _ ->
+//                    }
+//                    show()
+//                }
+//            }
 
             val location = service.apiGet("searchByPostal", inputAddress)
             location.enqueue(object : retrofit2.Callback<PostalResponse> {
@@ -75,6 +74,9 @@ class MainActivity : AppCompatActivity() {
                             "都道府県 : ${it.prefecture}\n区 : ${it.city}\n番地 : ${it.town}\n\n"
                         }?.joinToString()
 
+                    if (eachAddress == null) {
+                        resultLabel.text = getString(R.string.no_address_message)
+                    }
                 }
                 override fun onFailure(call: Call<PostalResponse>, t: Throwable) {
                     Log.d("通信結果", "失敗 $t")

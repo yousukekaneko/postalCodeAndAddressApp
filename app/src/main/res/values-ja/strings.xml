@@ -7,5 +7,8 @@
     <string name="dialog_title">お願い</string>
     <string name="dialog_message">7桁の数字を入力してください。</string>
 
+    <string name="hint_words">ハイフン無しの７桁入力をお願いします。</string>
+    <string name="no_address_message">合致する住所が存在しない。</string>
+
     <string name="answer_yes">はい</string>
 </resources>
