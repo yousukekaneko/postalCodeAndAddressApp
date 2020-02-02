@@ -10,6 +10,8 @@ import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+//import sun.jvm.hotspot.utilities.IntArray
+import java.util.regex.Pattern
 
 
 class MainActivity : AppCompatActivity() {
@@ -35,6 +37,10 @@ class MainActivity : AppCompatActivity() {
         //クリック処理
         searchButton.setOnClickListener {
             var inputAddress = textPostalAddress.text.toString()
+
+            if (!isValidPostaddress(inputAddress)) {
+                textPostalAddress.setError("Invalid PostAddress")
+            }
 
 //            //TODO 入力した値が正しいかどうかの処理
 //            if (inputAddress.length != 7) {
@@ -85,6 +91,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
+    private fun isValidPostaddress(inputAddress: String): Boolean {
+        val addressPatern = "/^¥d{3}-¥d{4}\$|^¥d{3}-¥d{2}\$|^¥d{3}\$/"
+        val pattern = Pattern.compile(addressPatern)
+        val matcher = pattern.matcher(inputAddress)
+        return matcher.matches()
+    }
 }
 
