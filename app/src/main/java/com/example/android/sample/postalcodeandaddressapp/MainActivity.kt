@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
         //log interceptorの設定
         val interceptor = HttpLoggingInterceptor()
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+        interceptor.level = HttpLoggingInterceptor.Level.BODY
         val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
 
         //retrofitインスタンスを生成
@@ -38,8 +38,9 @@ class MainActivity : AppCompatActivity() {
         searchButton.setOnClickListener {
             var inputAddress = textPostalAddress.text.toString()
 
-            if (!isValidPostaddress(inputAddress)) {
-                textPostalAddress.setError("Invalid PostAddress")
+            if (!isValidPostAddress(inputAddress)) {
+                textPostalAddress.error = getString(R.string.invalid_PostAddress)
+                return@setOnClickListener
             }
 
 //            //TODO 入力した値が正しいかどうかの処理
@@ -91,9 +92,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun isValidPostaddress(inputAddress: String): Boolean {
-        val addressPatern = "/^¥d{3}-¥d{4}\$|^¥d{3}-¥d{2}\$|^¥d{3}\$/"
-        val pattern = Pattern.compile(addressPatern)
+    private fun isValidPostAddress(inputAddress: String): Boolean {
+        val addressPattern = Regex(pattern = """\d{3}-\d{4}""").toString()
+        val pattern = Pattern.compile(addressPattern)
         val matcher = pattern.matcher(inputAddress)
         return matcher.matches()
     }

@@ -7,8 +7,9 @@
     <string name="dialog_title">Attention!</string>
     <string name="dialog_message">Please enter a 7 digit number!</string>
 
-    <string name="hint_words">Please enter 7 digits without hyphen.</string>
+    <string name="hint_words">Please enter your zip code.</string>
     <string name="no_address_message">No matching address exists.</string>
+    <string name="invalid_PostAddress">Invalid postal code!</string>
 
     <string name="answer_yes">Yes</string>
 
