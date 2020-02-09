@@ -10,6 +10,8 @@ import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+//import sun.jvm.hotspot.utilities.IntArray
+import java.util.regex.Pattern
 
 
 class MainActivity : AppCompatActivity() {
@@ -20,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
         //log interceptorの設定
         val interceptor = HttpLoggingInterceptor()
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+        interceptor.level = HttpLoggingInterceptor.Level.BODY
         val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
 
         //retrofitインスタンスを生成
@@ -34,9 +36,23 @@ class MainActivity : AppCompatActivity() {
 
         //クリック処理
         searchButton.setOnClickListener {
-            val inputAddress = textPostalAddress.text.toString()
+            var inputAddress = textPostalAddress.text.toString()
 
-            //TODO 入力した値が正しいかどうかの処理
+            if (!isValidPostAddress(inputAddress)) {
+                textPostalAddress.error = getString(R.string.invalid_PostAddress)
+                return@setOnClickListener
+            }
+
+//            //TODO 入力した値が正しいかどうかの処理
+//            if (inputAddress.length != 7) {
+//                val invalidDialog = AlertDialog.Builder(this@MainActivity).apply{
+//                    setTitle(getString(R.string.dialog_title))
+//                    setMessage(getString(R.string.dialog_message))
+//                    setPositiveButton(getString(R.string.answer_yes)) { _, _ ->
+//                    }
+//                    show()
+//                }
+//            }
 
             val location = service.apiGet("searchByPostal", inputAddress)
             location.enqueue(object : retrofit2.Callback<PostalResponse> {
@@ -65,12 +81,22 @@ class MainActivity : AppCompatActivity() {
                             "都道府県 : ${it.prefecture}\n区 : ${it.city}\n番地 : ${it.town}\n\n"
                         }?.joinToString()
 
+                    if (eachAddress == null) {
+                        resultLabel.text = getString(R.string.no_address_message)
+                    }
                 }
                 override fun onFailure(call: Call<PostalResponse>, t: Throwable) {
                     Log.d("通信結果", "失敗 $t")
                 }
             })
         }
+    }
+
+    private fun isValidPostAddress(inputAddress: String): Boolean {
+        val addressPattern = Regex(pattern = """\d{3}-\d{4}""").toString()
+        val pattern = Pattern.compile(addressPattern)
+        val matcher = pattern.matcher(inputAddress)
+        return matcher.matches()
     }
 }
 
